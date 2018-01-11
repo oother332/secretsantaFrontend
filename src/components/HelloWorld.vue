@@ -25,8 +25,13 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: ""
     }
+  },
+  created: function(){
+    this.$http.get('http://localhost:8080/groups/all').then(response => {
+      this.msg.data = response.data;
+    })
   }
 }
 </script>
