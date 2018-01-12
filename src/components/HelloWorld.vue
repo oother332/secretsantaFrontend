@@ -2,36 +2,48 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <form id="create-group" action="http://localhost:8080/groups/new" method="PUT">
+      <div>
+        <label>Enter a name for your group:  </label>
+        <input type="text" placeholder="Group Name">
+      </div>
+      <div>
+        <label>Enter the number of members:  </label>
+        <input type="number" placeholder="Number of Members">
+      </div>
+      <div>
+        <label>Enter member name:  </label>
+        <input type="text" placeholder="Group Name">
+      </div>
+      <div>
+        <label>Enter member email:  </label>
+        <input type="email" placeholder="Email">
+      </div>
+      <div>
+        <label>Enter member preference:  </label>
+        <textarea  placeholder="Enter your preferences"></textarea>
+      </div>
+      <input type="submit" value="Submit" name="Submit">    <!-- APPLY V-MODEL TO THE FORM TO SUBMIT -->
+    </form>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: ""
+      msg: "",
+      errors:[]
     }
   },
   created: function(){
-    this.$http.get('http://localhost:8080/groups/all').then(response => {
+    axios.get('http://localhost:8080/groups/all').then(response => {
       this.msg.data = response.data;
-    })
+    }).catch(e => {
+      this.errors.push(e);
+    });
   }
 }
 </script>
